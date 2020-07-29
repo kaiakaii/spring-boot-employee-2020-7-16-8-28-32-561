@@ -1,31 +1,23 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
+    @Resource
+    private EmployeeService employeeService;
 
     @GetMapping
-    public List<Employee> getEmployeesPage(@RequestParam(required = false, defaultValue = "0") int page,
-                                           @RequestParam(required = false, defaultValue = "0") int pageSize,
-                                           @RequestParam(required = false, defaultValue = "") String gender) {
-        List<Employee> employees = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            employees.add(new Employee(i, "Tom" + i, 18 + i, "male", i * 1000));
-        }
-        if (page != 0) {
-            return employees.stream().limit(3).collect(Collectors.toList());
-        } else if (!gender.equals("")) {
-            return employees.stream().limit(1).collect(Collectors.toList());
-        } else {
-            return employees;
-        }
+    public List<Employee> getEmployees(@RequestParam(required = false, defaultValue = "0") int page,
+                                       @RequestParam(required = false, defaultValue = "0") int pageSize,
+                                       @RequestParam(required = false, defaultValue = "") String gender) {
+        return employeeService.findAll();
     }
 
 

@@ -8,11 +8,17 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
+    private EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     public List<Employee> findAll() {
+        return this.employeeRepository.findAll();
+    }
+
+    public Employee addEmployee(Employee employee) {
         return null;
     }
 }
