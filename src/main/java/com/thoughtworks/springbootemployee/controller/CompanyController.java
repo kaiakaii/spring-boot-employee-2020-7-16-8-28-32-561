@@ -48,8 +48,8 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public String updateCompany(@PathVariable(name = "id") int id) {
-        return "update successful id = " + id;
+    public Company updateCompany(@PathVariable(name = "id") int id, @RequestBody Company company) {
+        return companyService.updateCompanyById(id, company);
     }
 
     @DeleteMapping("/{id}")

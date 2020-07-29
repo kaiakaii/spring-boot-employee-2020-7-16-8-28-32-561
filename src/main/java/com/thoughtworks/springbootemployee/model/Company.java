@@ -10,7 +10,7 @@ public class Company {
     private int id;
     private String companyName;
     private int employeesNumber;
-    @Transient
+    @OneToMany
     private List<Employee> employees;
 
 

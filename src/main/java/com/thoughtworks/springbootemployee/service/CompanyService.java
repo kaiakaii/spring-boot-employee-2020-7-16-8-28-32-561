@@ -46,6 +46,11 @@ public class CompanyService {
     }
 
     public Company updateCompanyById(int companyId, Company updateCompany) {
+        Company company = findById(companyId);
+        if (Objects.nonNull(company)) {
+            updateCompany.setId(companyId);
+            return companyRepository.save(updateCompany);
+        }
         return null;
     }
 }
