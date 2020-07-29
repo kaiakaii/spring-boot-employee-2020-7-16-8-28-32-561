@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/employees")
@@ -17,6 +18,9 @@ public class EmployeeController {
     public List<Employee> getEmployees(@RequestParam(required = false, defaultValue = "0") int page,
                                        @RequestParam(required = false, defaultValue = "0") int pageSize,
                                        @RequestParam(required = false, defaultValue = "") String gender) {
+        if (Objects.nonNull(gender)) {
+            return employeeService.findAllByGender(gender);
+        }
         return employeeService.findAll();
     }
 

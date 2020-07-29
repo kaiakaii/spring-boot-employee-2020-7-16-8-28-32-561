@@ -92,4 +92,19 @@ public class EmployeeServiceTest {
         assertNotNull(actualEmployees);
         assertEquals(2, actualEmployees.size());
     }
+
+    @Test
+    void should_return_update_employee_when_update_employee_by_id_given_employee_id() {
+        //given
+        int employeeId = 1;
+        Employee updateEmployee = new Employee(employeeId, "test", 18, "male", 900);
+        EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        when(employeeRepository.save(updateEmployee)).thenReturn(updateEmployee);
+        //when
+        Employee employee = employeeService.updateEmployeeById(employeeId, updateEmployee);
+        //then
+        assertNotNull(employee);
+        assertEquals(updateEmployee, employee);
+    }
 }

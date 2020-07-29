@@ -39,6 +39,10 @@ public class EmployeeService {
     }
 
     public List<Employee> findAllByGender(String gender) {
+        return employeeRepository.findAllByGender(gender);
+    }
+
+    public Employee updateEmployeeById(int employeeId, Employee updateEmployee) {
         return null;
     }
 }
