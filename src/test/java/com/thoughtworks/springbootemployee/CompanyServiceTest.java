@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CompanyServiceTest {
     private static List<Company> companies;
@@ -46,6 +47,19 @@ public class CompanyServiceTest {
         assertEquals(10, actualCompanies.size());
     }
 
+    @Test
+    void should_return_employees_when_add_employee_given_employee() {
+        //given
+        Company company = new Company(1, "test", 100);
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        when(companyRepository.save(company)).thenReturn(company);
+        //when
+        Company actualCompany = companyService.addCompany(company);
+        //then
+        assertNotNull(actualCompany);
+        assertEquals(company, actualCompany);
+    }
 //    @Test
 //    void should_return_company_when_find_company_by_id_given_company_id() {
 //        //given
@@ -60,7 +74,7 @@ public class CompanyServiceTest {
 //        assertNotNull(company);
 //        assertEquals(expectCompany, company);
 //    }
-//
+
 //    @Test
 //    void should_return_employees_when_get_employees_by_company_id_given_company_id() {
 //        //given
