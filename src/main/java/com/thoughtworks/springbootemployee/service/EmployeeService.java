@@ -43,6 +43,11 @@ public class EmployeeService {
     }
 
     public Employee updateEmployeeById(int employeeId, Employee updateEmployee) {
+        Employee employee = findEmployeeById(employeeId);
+        if (Objects.nonNull(employee)) {
+            updateEmployee.setId(employeeId);
+            return employeeRepository.save(updateEmployee);
+        }
         return null;
     }
 }

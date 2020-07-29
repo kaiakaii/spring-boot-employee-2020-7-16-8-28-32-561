@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -92,7 +93,6 @@ public class EmployeeServiceTest {
         assertNotNull(actualEmployees);
         assertEquals(2, actualEmployees.size());
     }
-
     @Test
     void should_return_update_employee_when_update_employee_by_id_given_employee_id() {
         //given
@@ -101,6 +101,7 @@ public class EmployeeServiceTest {
         EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);
         when(employeeRepository.save(updateEmployee)).thenReturn(updateEmployee);
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(updateEmployee));
         //when
         Employee employee = employeeService.updateEmployeeById(employeeId, updateEmployee);
         //then
