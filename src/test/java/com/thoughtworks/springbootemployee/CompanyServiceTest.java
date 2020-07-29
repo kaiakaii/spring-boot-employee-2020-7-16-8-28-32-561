@@ -3,10 +3,8 @@ package com.thoughtworks.springbootemployee;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +13,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+
 public class CompanyServiceTest {
     private static List<Company> companies;
 
     @BeforeAll
-    static void init(){
+    static void init() {
         companies = new ArrayList<>();
-        for (int i=0;i<10;i++){
-            companies.add(new Company(i+1, String.format("company-%s", i+1),200));
+        for (int i = 0; i < 10; i++) {
+            companies.add(new Company(i + 1, String.format("company-%s", i + 1), 200));
         }
     }
+
     @Test
     void should_return_companies_when_find_all_companies_given_company_service() {
         //given
@@ -33,9 +33,9 @@ public class CompanyServiceTest {
         CompanyService companyService = new CompanyService(companyRepository);
 
         //when
-        List<Company> companies = companyService.findAll();
+        List<Company> actualCompanies = companyService.findAll();
         //then
-        assertNotNull(companies);
-        assertEquals(10,companies.size());
+        assertNotNull(actualCompanies);
+        assertEquals(10, actualCompanies.size());
     }
 }
