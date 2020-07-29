@@ -30,7 +30,11 @@ public class EmployeeService {
         return employeeRepository.findById(employeeId).orElse(null);
     }
 
-    public boolean deleteById(int employeeId) {
+    public boolean deleteById(Integer employeeId) {
+        if (Objects.nonNull(employeeId) && Objects.nonNull(findEmployeeById(employeeId))) {
+            employeeRepository.deleteById(employeeId);
+            return true;
+        }
         return false;
     }
 }

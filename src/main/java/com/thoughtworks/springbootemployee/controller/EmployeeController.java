@@ -40,8 +40,10 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     public String deleteEmployee(@PathVariable(name = "id") int id) {
-        return "delete id: " + id;
-
+        if (employeeService.deleteById(id)) {
+            return "delete success";
+        }
+        return "delete fail";
     }
 
 }
