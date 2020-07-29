@@ -27,6 +27,6 @@ public class EmployeeService {
     }
 
     public Employee findEmployeeById(int employeeId) {
-        return null;
+        return employeeRepository.getOne(employeeId);
     }
 }

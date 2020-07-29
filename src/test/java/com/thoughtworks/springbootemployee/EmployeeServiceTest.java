@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -57,7 +56,7 @@ public class EmployeeServiceTest {
         int employeeId = 1;
         EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);
-        when(employeeRepository.findById(1)).thenReturn(Optional.of(new Employee(1, "test", 18, "female", 900)));
+        when(employeeRepository.getOne(1)).thenReturn(new Employee(1, "test", 18, "female", 900));
         //when
         Employee actualEmployee = employeeService.findEmployeeById(employeeId);
         //then
