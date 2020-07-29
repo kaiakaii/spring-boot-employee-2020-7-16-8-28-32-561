@@ -6,8 +6,11 @@ import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,25 +99,24 @@ public class CompanyServiceTest {
 //        }
 //
 //    }
-//    @Test
-//    void should_return_companies_when_get_companies_with_paging_given_page_and_page_size() {
-//        //given
-//        int page = 1;
-//        int pageSize = 5;
-//        CompanyRepository companyRepository = mock(CompanyRepository.class);
-//        CompanyService companyService = new CompanyService(companyRepository);
-//        given(companyRepository.findAllWithPaging(page,pageSize)).willReturn(companies.stream()
-//                .skip((page-1)*pageSize)
-//                .limit(pageSize)
-//                .collect(Collectors.toList());
-//
-//        //when
-//        List<Company> pagingCompanies = companyService.findAllWithPaging(page,pageSize);
-//        //then
-//        assertNotNull(employees);
-//
-//
-//    }
+@Test
+void should_return_companies_when_get_companies_with_paging_given_page_and_page_size() {
+    //given
+    int page = 1;
+    int pageSize = 5;
+    CompanyRepository companyRepository = mock(CompanyRepository.class);
+    CompanyService companyService = new CompanyService(companyRepository);
+    when(companyRepository.findAll(PageRequest.of(page, pageSize))).thenReturn(new PageImpl<>(Arrays.asList(
+            new Company(1, "test", 100),
+            new Company(2, "test2", 100))));
+    //when
+    List<Company> companyList = companyService.findAll(page, pageSize);
+    //then
+    assertNotNull(companyList);
+    assertEquals(2, companyList.size());
+
+
+}
 
 
 }

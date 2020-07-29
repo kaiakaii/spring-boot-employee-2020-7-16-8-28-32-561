@@ -27,4 +27,8 @@ public class CompanyService {
     public Company findById(int companyId) {
         return companyRepository.findById(companyId).orElse(null);
     }
+
+    public List<Company> findAll(int page, int pageSize) {
+        return null;
+    }
 }
