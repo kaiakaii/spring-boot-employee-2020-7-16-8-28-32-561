@@ -15,12 +15,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CompanyServiceTest {
-    private List<Company> companies;
+    private static List<Company> companies;
 
     @BeforeAll
-    public void init(){
+    static void init(){
         companies = new ArrayList<>();
         for (int i=0;i<10;i++){
             companies.add(new Company(i+1, String.format("company-%s", i+1),200));
