@@ -43,12 +43,12 @@ public class CompanyController {
     }
 
     //TODO
-    @PostMapping
-    public Company createCompany(@RequestBody Company company) {
-        Company company1 = new Company(company.getCompanyId(), company.getCompanyName(), company.getEmployeesNumber());
-        company1.setEmployees(company.getEmployees());
-        return company1;
-    }
+//    @PostMapping
+//    public Company createCompany(@RequestBody Company company) {
+//        Company company1 = new Company(company.getId(), company.getCompanyName(), company.getEmployeesNumber());
+//        company1.setEmployees(company.getEmployees());
+//        return company1;
+//    }
 
     @PutMapping("/{id}")
     public String updateCompany(@PathVariable(name = "id") int id) {

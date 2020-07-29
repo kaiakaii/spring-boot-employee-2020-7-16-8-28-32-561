@@ -80,4 +80,25 @@ public class CompanyServiceTest {
         }
 
     }
+//    @Test
+//    void should_return_companies_when_get_companies_with_paging_given_page_and_page_size() {
+//        //given
+//        int page = 1;
+//        int pageSize = 5;
+//        CompanyRepository companyRepository = mock(CompanyRepository.class);
+//        CompanyService companyService = new CompanyService(companyRepository);
+//        given(companyRepository.findAllWithPaging(page,pageSize)).willReturn(companies.stream()
+//                .skip((page-1)*pageSize)
+//                .limit(pageSize)
+//                .collect(Collectors.toList());
+//
+//        //when
+//        List<Company> pagingCompanies = companyService.findAllWithPaging(page,pageSize);
+//        //then
+//        assertNotNull(employees);
+//
+//
+//    }
+
+
 }

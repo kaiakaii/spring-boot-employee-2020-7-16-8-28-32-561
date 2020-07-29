@@ -1,8 +1,12 @@
 package com.thoughtworks.springbootemployee.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class Employee {
+    @Id
     private int id;
     private String name;
     private int age;
