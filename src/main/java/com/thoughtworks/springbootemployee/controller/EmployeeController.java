@@ -16,11 +16,14 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping
-    public List<Employee> getEmployees(@RequestParam(required = false, defaultValue = "0") int page,
-                                       @RequestParam(required = false, defaultValue = "0") int pageSize,
-                                       @RequestParam(required = false, defaultValue = "") String gender) {
+    public List<Employee> getEmployees(@RequestParam(required = false) Integer page,
+                                       @RequestParam(required = false) Integer pageSize,
+                                       @RequestParam(required = false) String gender) {
         if (Objects.nonNull(gender)) {
             return employeeService.findAllByGender(gender);
+        }
+        if (Objects.nonNull(page) && Objects.nonNull(pageSize)) {
+            return employeeService.findAll(page, pageSize);
         }
         return employeeService.findAll();
     }
