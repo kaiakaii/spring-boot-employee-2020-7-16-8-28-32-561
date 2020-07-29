@@ -53,9 +53,11 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
     public String deleteCompany(@PathVariable(name = "id") int id) {
-        return "delete successful id = " + id;
+        if (companyService.deleteById(id)) {
+            return "delete success";
+        }
+        return "delete fail";
     }
 
 

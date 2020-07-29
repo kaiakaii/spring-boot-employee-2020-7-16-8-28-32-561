@@ -123,11 +123,28 @@ public class CompanyServiceTest {
         int companyId = 1;
         CompanyRepository companyRepository = mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
-        when(companyRepository.findById(companyId)).thenReturn(Optional.of(new Company(1, "test", 100)));
+        when(companyRepository.findById(companyId)).thenReturn(Optional.of(
+                new Company(1, "test", 100)));
         //when
         boolean isDelete = companyService.deleteById(companyId);
         //then
         assertTrue(isDelete);
+    }
+
+    @Test
+    void should_return_update_company_when_update_company_by_id_given_company_id() {
+        //given
+        int companyId = 1;
+        Company updateCompany = new Company(1, "test", 100);
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        when(companyRepository.save(updateCompany)).thenReturn(updateCompany);
+        when(companyRepository.findById(companyId)).thenReturn(Optional.of(updateCompany));
+        //when
+        Company company = companyService.updateCompanyById(companyId, updateCompany);
+        //then
+        assertNotNull(company);
+        assertEquals(updateCompany, company);
     }
 
 

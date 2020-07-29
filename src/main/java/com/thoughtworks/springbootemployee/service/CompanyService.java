@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -36,7 +37,15 @@ public class CompanyService {
         return companyRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
     }
 
-    public boolean deleteById(int companyId) {
+    public boolean deleteById(Integer companyId) {
+        if (Objects.nonNull(companyId) && Objects.nonNull(findById(companyId))) {
+            companyRepository.deleteById(companyId);
+            return true;
+        }
         return false;
+    }
+
+    public Company updateCompanyById(int companyId, Company updateCompany) {
+        return null;
     }
 }
