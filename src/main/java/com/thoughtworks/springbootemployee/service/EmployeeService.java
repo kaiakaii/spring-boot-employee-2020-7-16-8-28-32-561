@@ -26,7 +26,7 @@ public class EmployeeService {
         return null;
     }
 
-    public Employee findEmployeeById(int employeeId) {
-        return employeeRepository.getOne(employeeId);
+    public Employee findEmployeeById(Integer employeeId) {
+        return employeeRepository.findById(employeeId).orElse(null);
     }
 }
