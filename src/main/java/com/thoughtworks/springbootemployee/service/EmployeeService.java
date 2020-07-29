@@ -50,4 +50,8 @@ public class EmployeeService {
         }
         return null;
     }
+
+    public List<Employee> findAll(int page, int pageSize) {
+        return null;
+    }
 }

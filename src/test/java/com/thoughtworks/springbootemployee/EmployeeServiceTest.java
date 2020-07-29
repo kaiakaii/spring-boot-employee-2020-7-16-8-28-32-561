@@ -5,6 +5,8 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,5 +109,22 @@ public class EmployeeServiceTest {
         //then
         assertNotNull(employee);
         assertEquals(updateEmployee, employee);
+    }
+
+    @Test
+    void should_return_employees_when_get_employee_by_paging_given_page_and_page_size() {
+        //given
+        int page = 1;
+        int pageSize = 5;
+        EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        when(employeeRepository.findAll(PageRequest.of(page, pageSize))).thenReturn(new PageImpl<>(Arrays.asList(
+                new Employee(1, "test", 18, "male", 900),
+                new Employee(2, "test", 18, "male", 900))));
+        //when
+        List<Employee> employeeList = employeeService.findAll(page, pageSize);
+        //then
+        assertNotNull(employeeList);
+        assertEquals(2, employeeList.size());
     }
 }
