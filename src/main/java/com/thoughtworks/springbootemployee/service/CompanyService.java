@@ -35,4 +35,8 @@ public class CompanyService {
         }
         return companyRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
     }
+
+    public boolean deleteById(int companyId) {
+        return false;
+    }
 }

@@ -14,8 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -80,7 +79,7 @@ public class CompanyServiceTest {
         assertEquals(expectCompany, company);
     }
 
-//    @Test
+    //    @Test
 //    void should_return_employees_when_get_employees_by_company_id_given_company_id() {
 //        //given
 //        int companyId = 1;
@@ -99,24 +98,37 @@ public class CompanyServiceTest {
 //        }
 //
 //    }
-@Test
-void should_return_companies_when_get_companies_with_paging_given_page_and_page_size() {
-    //given
-    int page = 1;
-    int pageSize = 5;
-    CompanyRepository companyRepository = mock(CompanyRepository.class);
-    CompanyService companyService = new CompanyService(companyRepository);
-    when(companyRepository.findAll(PageRequest.of(page, pageSize).first())).thenReturn(new PageImpl<>(Arrays.asList(
-            new Company(1, "test", 100),
-            new Company(2, "test2", 100))));
-    //when
-    List<Company> companyList = companyService.findAll(page, pageSize);
-    //then
-    assertNotNull(companyList);
-    assertEquals(2, companyList.size());
+    @Test
+    void should_return_companies_when_get_companies_with_paging_given_page_and_page_size() {
+        //given
+        int page = 1;
+        int pageSize = 5;
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        when(companyRepository.findAll(PageRequest.of(page, pageSize).first())).thenReturn(new PageImpl<>(Arrays.asList(
+                new Company(1, "test", 100),
+                new Company(2, "test2", 100))));
+        //when
+        List<Company> companyList = companyService.findAll(page, pageSize);
+        //then
+        assertNotNull(companyList);
+        assertEquals(2, companyList.size());
 
 
-}
+    }
+
+    @Test
+    void should_return_true_when_delete_company_given_company_id() {
+        //given
+        int companyId = 1;
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        when(companyRepository.findById(companyId)).thenReturn(Optional.of(new Company(1, "test", 100)));
+        //when
+        boolean isDelete = companyService.deleteById(companyId);
+        //then
+        assertTrue(isDelete);
+    }
 
 
 }
