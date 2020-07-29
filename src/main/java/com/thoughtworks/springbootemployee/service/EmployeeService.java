@@ -37,4 +37,8 @@ public class EmployeeService {
         }
         return false;
     }
+
+    public List<Employee> findAllByGender(String gender) {
+        return null;
+    }
 }
