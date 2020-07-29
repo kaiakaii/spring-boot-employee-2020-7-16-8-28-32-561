@@ -38,4 +38,18 @@ public class CompanyServiceTest {
         assertNotNull(actualCompanies);
         assertEquals(10, actualCompanies.size());
     }
+
+    @Test
+    void should_return_company_when_find_company_by_id_given_company_id() {
+        //given
+        int companyId = 1;
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        given(companyRepository.findById(companyId)).willReturn(companies.get(companyId));
+        //when
+        Company company = companyService.findById(companyId);
+        //then
+        assertNotNull(company);
+        assertEquals(companies.get(companyId), company);
+    }
 }
