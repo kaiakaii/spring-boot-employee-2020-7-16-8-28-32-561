@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -60,20 +61,21 @@ public class CompanyServiceTest {
         assertNotNull(actualCompany);
         assertEquals(company, actualCompany);
     }
-//    @Test
-//    void should_return_company_when_find_company_by_id_given_company_id() {
-//        //given
-//        int companyId = 1;
-//        CompanyRepository companyRepository = mock(CompanyRepository.class);
-//        CompanyService companyService = new CompanyService(companyRepository);
-//        Company expectCompany = companies.get(0);
-//        given(companyRepository.findById(companyId)).willReturn(expectCompany);
-//        //when
-//        Company company = companyService.findById(companyId);
-//        //then
-//        assertNotNull(company);
-//        assertEquals(expectCompany, company);
-//    }
+
+    @Test
+    void should_return_company_when_find_company_by_id_given_company_id() {
+        //given
+        int companyId = 1;
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        Company expectCompany = companies.get(0);
+        given(companyRepository.findById(companyId)).willReturn(Optional.of(expectCompany));
+        //when
+        Company company = companyService.findById(companyId);
+        //then
+        assertNotNull(company);
+        assertEquals(expectCompany, company);
+    }
 
 //    @Test
 //    void should_return_employees_when_get_employees_by_company_id_given_company_id() {
