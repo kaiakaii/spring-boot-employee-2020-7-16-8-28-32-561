@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,14 @@ public class CompanyService {
         if (Objects.nonNull(company)) {
             updateCompany.setId(companyId);
             return companyRepository.save(updateCompany);
+        }
+        return null;
+    }
+
+    public List<Employee> getEmployeesByCompanyId(int companyId) {
+        Company company = findById(companyId);
+        if (Objects.nonNull(company)) {
+            return company.getEmployees();
         }
         return null;
     }

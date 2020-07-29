@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,12 +32,8 @@ public class CompanyController {
     }
 
     @GetMapping(path = "/{id}/employees")
-    public List<Employee> getEmployees() {
-        List<Employee> employees = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            employees.add(new Employee(i, "Tom" + i, 18 + i, "male", i * 1000));
-        }
-        return employees;
+    public List<Employee> getEmployees(@PathVariable int id) {
+        return companyService.getEmployeesByCompanyId(id);
     }
 
     @PostMapping

@@ -79,25 +79,24 @@ public class CompanyServiceTest {
         assertEquals(expectCompany, company);
     }
 
-    //    @Test
-//    void should_return_employees_when_get_employees_by_company_id_given_company_id() {
-//        //given
-//        int companyId = 1;
-//        CompanyRepository companyRepository = mock(CompanyRepository.class);
-//        CompanyService companyService = new CompanyService(companyRepository);
-//        Company expectCompany = companies.get(0);
-//        given(companyRepository.findById(companyId)).willReturn(expectCompany);
-//        given(companyRepository.getEmployeesByCompanyId(companyId)).willReturn(expectCompany.getEmployees());
-//        //when
-//        List<Employee> employees = companyService.getEmployeesByCompanyId(companyId);
-//        //then
-//        assertNotNull(employees);
-//        assertEquals(expectCompany.getEmployees().size(), employees.size());
-//        for (int i = 0; i < employees.size(); i++) {
-//            assertEquals(expectCompany.getEmployees().get(i), employees.get(i));
-//        }
-//
-//    }
+    @Test
+    void should_return_employees_when_get_employees_by_company_id_given_company_id() {
+        //given
+        int companyId = 1;
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        Company expectCompany = companies.get(0);
+        given(companyRepository.findById(companyId)).willReturn(Optional.of(expectCompany));
+        //when
+        List<Employee> employees = companyService.getEmployeesByCompanyId(companyId);
+        //then
+        assertNotNull(employees);
+        assertEquals(expectCompany.getEmployees().size(), employees.size());
+        for (int i = 0; i < employees.size(); i++) {
+            assertEquals(expectCompany.getEmployees().get(i), employees.get(i));
+        }
+
+    }
     @Test
     void should_return_companies_when_get_companies_with_paging_given_page_and_page_size() {
         //given
@@ -146,6 +145,21 @@ public class CompanyServiceTest {
         assertNotNull(company);
         assertEquals(updateCompany, company);
     }
+//    @Test
+//    void should_return_employees_of_company_when_find_employees_by_company_id_given_company_id() {
+//        //given
+//        int companyId = 1;
+//        Company updateCompany = new Company(1, "test", 100);
+//        CompanyRepository companyRepository = mock(CompanyRepository.class);
+//        CompanyService companyService = new CompanyService(companyRepository);
+//        when(companyRepository.save(updateCompany)).thenReturn(updateCompany);
+//        when(companyRepository.findById(companyId)).thenReturn(Optional.of(updateCompany));
+//        //when
+//        Company company = companyService.updateCompanyById(companyId, updateCompany);
+//        //then
+//        assertNotNull(company);
+//        assertEquals(updateCompany, company);
+//    }
 
 
 }
