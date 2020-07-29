@@ -2,29 +2,24 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
+    @Resource
+    private CompanyService companyService;
 
     @GetMapping
-    public List<Company> getPage(@RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false, defaultValue = "0") int pageSize) {
-        List<Company> companies = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            companies.add(new Company(i, "HUAWEI", 200));
-        }
-        if (page == 0 && pageSize == 0) {
-            return companies;
-        } else {
-            return companies.stream().limit(3).collect(Collectors.toList());
-        }
+    public List<Company> getCompanies(@RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false, defaultValue = "0") int pageSize) {
+        return companyService.findAll();
     }
 
 
