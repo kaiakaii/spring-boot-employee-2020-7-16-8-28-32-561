@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @RestController
@@ -18,7 +19,10 @@ public class CompanyController {
     private CompanyService companyService;
 
     @GetMapping
-    public List<Company> getCompanies(@RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false, defaultValue = "0") int pageSize) {
+    public List<Company> getCompanies(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
+        if (Objects.nonNull(page) && Objects.nonNull(pageSize)) {
+            return companyService.findAll(page, pageSize);
+        }
         return companyService.findAll();
     }
 

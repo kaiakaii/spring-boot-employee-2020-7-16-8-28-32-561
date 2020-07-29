@@ -59,7 +59,7 @@ public class EmployeeServiceTest {
         int employeeId = 1;
         EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);
-        when(employeeRepository.getOne(1)).thenReturn(new Employee(1, "test", 18, "female", 900));
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(new Employee(1, "test", 18, "female", 900)));
         //when
         Employee actualEmployee = employeeService.findEmployeeById(employeeId);
         //then
@@ -73,6 +73,7 @@ public class EmployeeServiceTest {
         int employeeId = 1;
         EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(new Employee(employeeId, "test", 18, "female", 900)));
         //when
         boolean isDelete = employeeService.deleteById(employeeId);
         //then
@@ -118,7 +119,7 @@ public class EmployeeServiceTest {
         int pageSize = 5;
         EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);
-        when(employeeRepository.findAll(PageRequest.of(page, pageSize))).thenReturn(new PageImpl<>(Arrays.asList(
+        when(employeeRepository.findAll(PageRequest.of(page, pageSize).first())).thenReturn(new PageImpl<>(Arrays.asList(
                 new Employee(1, "test", 18, "male", 900),
                 new Employee(2, "test", 18, "male", 900))));
         //when

@@ -106,7 +106,7 @@ void should_return_companies_when_get_companies_with_paging_given_page_and_page_
     int pageSize = 5;
     CompanyRepository companyRepository = mock(CompanyRepository.class);
     CompanyService companyService = new CompanyService(companyRepository);
-    when(companyRepository.findAll(PageRequest.of(page, pageSize))).thenReturn(new PageImpl<>(Arrays.asList(
+    when(companyRepository.findAll(PageRequest.of(page, pageSize).first())).thenReturn(new PageImpl<>(Arrays.asList(
             new Company(1, "test", 100),
             new Company(2, "test2", 100))));
     //when

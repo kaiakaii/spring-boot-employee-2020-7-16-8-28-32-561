@@ -53,9 +53,9 @@ public class EmployeeService {
     }
 
     public List<Employee> findAll(int page, int pageSize) {
-        if (page < 0 || pageSize < 0) {
+        if (page < 1 || pageSize < 0) {
             return null;
         }
-        return employeeRepository.findAll(PageRequest.of(page + 1, pageSize)).getContent();
+        return employeeRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
     }
 }
