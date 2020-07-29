@@ -29,4 +29,8 @@ public class EmployeeService {
     public Employee findEmployeeById(Integer employeeId) {
         return employeeRepository.findById(employeeId).orElse(null);
     }
+
+    public boolean deleteById(int employeeId) {
+        return false;
+    }
 }
