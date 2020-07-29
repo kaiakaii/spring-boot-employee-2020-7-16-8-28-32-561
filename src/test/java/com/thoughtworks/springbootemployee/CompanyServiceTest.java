@@ -45,11 +45,12 @@ public class CompanyServiceTest {
         int companyId = 1;
         CompanyRepository companyRepository = mock(CompanyRepository.class);
         CompanyService companyService = new CompanyService(companyRepository);
-        given(companyRepository.findById(companyId)).willReturn(companies.get(companyId));
+        Company expectCompany = companies.get(0);
+        given(companyRepository.findById(companyId)).willReturn(expectCompany);
         //when
         Company company = companyService.findById(companyId);
         //then
         assertNotNull(company);
-        assertEquals(companies.get(companyId), company);
+        assertEquals(expectCompany, company);
     }
 }
