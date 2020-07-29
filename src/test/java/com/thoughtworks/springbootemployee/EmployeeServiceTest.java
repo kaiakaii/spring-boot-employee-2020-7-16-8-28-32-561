@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -49,5 +50,18 @@ public class EmployeeServiceTest {
         //then
         assertNotNull(actualEmployee);
         assertEquals(employee, actualEmployee);
+    }
+    @Test
+    void should_return_employee_when_find_employees_by_id_given_employee_id() {
+        //given
+        int employeeId = 1;
+        EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(new Employee(1, "test", 18, "female", 900)));
+        //when
+        Employee actualEmployee = employeeService.findEmployeeById(employeeId);
+        //then
+        assertNotNull(actualEmployee);
+        assertEquals(1, actualEmployee.getId());
     }
 }
