@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Company {
     private int companyId;
@@ -47,5 +48,25 @@ public class Company {
 
     public void setEmployeesNumber(int employeesNumber) {
         this.employeesNumber = employeesNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Company)) {
+            return false;
+        }
+        Company company = (Company) o;
+        return getCompanyId() == company.getCompanyId() &&
+                getEmployeesNumber() == company.getEmployeesNumber() &&
+                getCompanyName().equals(company.getCompanyName()) &&
+                getEmployees().equals(company.getEmployees());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCompanyId(), getCompanyName(), getEmployeesNumber(), getEmployees());
     }
 }

@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.model;
 
+import java.util.Objects;
+
 public class Employee {
     private int id;
     private String name;
@@ -56,5 +58,22 @@ public class Employee {
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return getId() == employee.getId() &&
+                getAge() == employee.getAge() &&
+                getSalary() == employee.getSalary() &&
+                getName().equals(employee.getName()) &&
+                getGender().equals(employee.getGender());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getAge(), getGender(), getSalary());
     }
 }

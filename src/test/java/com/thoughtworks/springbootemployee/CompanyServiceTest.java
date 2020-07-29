@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,7 +22,13 @@ public class CompanyServiceTest {
     static void init() {
         companies = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            companies.add(new Company(i + 1, String.format("company-%s", i + 1), 200));
+            Company company = new Company(i + 1, String.format("company-%s", i + 1), 200);
+            companies.add(company);
+            List<Employee> employees = new ArrayList<>();
+            for (int j = 0; j < 5; j++) {
+                employees.add(new Employee(j, "Tom" + j, 18, j % 2 == 0 ? "male" : "female", j * 1000));
+            }
+            company.setEmployees(employees);
         }
     }
 
@@ -52,5 +59,25 @@ public class CompanyServiceTest {
         //then
         assertNotNull(company);
         assertEquals(expectCompany, company);
+    }
+
+    @Test
+    void should_return_employees_when_get_employees_by_company_id_given_company_id() {
+        //given
+        int companyId = 1;
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService(companyRepository);
+        Company expectCompany = companies.get(0);
+        given(companyRepository.findById(companyId)).willReturn(expectCompany);
+        given(companyRepository.getEmployeesByCompanyId(companyId)).willReturn(expectCompany.getEmployees());
+        //when
+        List<Employee> employees = companyService.getEmployeesByCompanyId(companyId);
+        //then
+        assertNotNull(employees);
+        assertEquals(expectCompany.getEmployees().size(), employees.size());
+        for (int i = 0; i < employees.size(); i++) {
+            assertEquals(expectCompany.getEmployees().get(i), employees.get(i));
+        }
+
     }
 }
