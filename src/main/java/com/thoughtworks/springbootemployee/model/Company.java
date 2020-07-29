@@ -7,15 +7,11 @@ import java.util.List;
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private int id;
     private String companyName;
     private int employeesNumber;
     @Transient
     private List<Employee> employees;
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
 
 
@@ -26,10 +22,6 @@ public class Company {
         this.id = id;
         this.companyName = companyName;
         this.employeesNumber = employeesNumber;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getCompanyName() {
@@ -54,5 +46,13 @@ public class Company {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
