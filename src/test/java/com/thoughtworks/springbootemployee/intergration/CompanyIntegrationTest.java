@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.intergration;
 
+import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.AfterAll;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,11 +47,24 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.companyName").value("test5"))
                 .andExpect(jsonPath("$.employeesNumber").value(200));
-
-
         //when
-
         //then
+    }
 
+    @Test
+    void should_return_companies_when_get_companies_given_none() throws Exception {
+        //given
+        companyRepository.save(new Company(1, "test", 100));
+        companyRepository.save(new Company(2, "test1", 100));
+        companyRepository.save(new Company(3, "test3", 100));
+
+        mockMvc.perform(get("/companies"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].companyName").value("test"))
+                .andExpect(jsonPath("$[0].employeesNumber").value(100));
+
+        //when//then
     }
 }
