@@ -14,8 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -138,6 +137,21 @@ public class EmployeeIntergrationTest {
                 .andExpect(jsonPath("$[0].gender").value("male"))
                 .andExpect(jsonPath("$[0].salary").value(1111))
                 .andExpect(jsonPath("$[0].companyId").value(1));
+
+        //when//then
+    }
+
+    @Test
+    void should_return_none_when_delete_employee_by_gender_given_employee_id() throws Exception {
+        //given
+        Company company = new Company(1, "test", 100);
+        companyRepository.save(company);
+        Employee employee = new Employee(1, "tom", 12, "male", 1111, company.getId());
+        employeeRepository.save(employee);
+
+
+        mockMvc.perform(delete("/employees/2").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
         //when//then
     }
