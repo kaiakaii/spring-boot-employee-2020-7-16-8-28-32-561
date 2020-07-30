@@ -69,7 +69,7 @@ public class CompanyIntegrationTest {
     }
 
     @Test
-    void should_return_employee_when_get_employee_by_id_given_employee_id() throws Exception {
+    void should_return_company_when_get_company_by_id_given_company_id() throws Exception {
         //given
         Company company = new Company(1, "test", 100);
         companyRepository.save(company);
@@ -106,7 +106,7 @@ public class CompanyIntegrationTest {
     }
 
     @Test
-    void should_return_none_when_delete_employee_by_gender_given_employee_id() throws Exception {
+    void should_return_none_when_delete_company_by_gender_given_company_id() throws Exception {
         //given
         Company company = new Company(1, "test", 100);
         companyRepository.save(company);
@@ -116,6 +116,43 @@ public class CompanyIntegrationTest {
 
         mockMvc.perform(delete("/companies/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+        //when//then
+    }
+
+    @Test
+    void should_return_updated_company_when_update_company_by_gender_given_company_and_id() throws Exception {
+        //given
+        Company company = new Company(1, "test", 100);
+        companyRepository.save(company);
+        String jsonCompany = "{\n" +
+                "    \"companyName\":\"test5\",\n" +
+                "    \"employeesNumber\":200\n" +
+                "}";
+
+        mockMvc.perform(put("/companies/1").contentType(MediaType.APPLICATION_JSON).content(jsonCompany))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyName").value("test5"))
+                .andExpect(jsonPath("$.employeesNumber").value(200));
+
+        //when//then
+    }
+
+    @Test
+    void should_return_employees_when_find_employees_by_company_id_given_company_id() throws Exception {
+        //given
+        Company company = new Company(1, "test", 100);
+        companyRepository.save(company);
+        Employee employee = new Employee(1, "tom", 12, "male", 1111, company.getId());
+        employeeRepository.save(employee);
+        employeeRepository.save(new Employee(1, "tom", 12, "male", 1111, company.getId()));
+        employeeRepository.save(new Employee(2, "tom2", 12, "female", 1111, company.getId()));
+        employeeRepository.save(new Employee(3, "tom3", 12, "male", 1111, company.getId()));
+
+        mockMvc.perform(get("/companies/{id}", 1).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyName").value("test"))
+                .andExpect(jsonPath("$.employeesNumber").value(100));
 
         //when//then
     }
