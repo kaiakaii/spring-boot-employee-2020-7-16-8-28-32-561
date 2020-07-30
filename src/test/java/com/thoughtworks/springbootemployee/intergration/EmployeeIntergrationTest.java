@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -123,9 +124,15 @@ public class EmployeeIntergrationTest {
         companyRepository.save(company);
         Employee employee = new Employee(1, "tom", 12, "male", 1111, company.getId());
         employeeRepository.save(employee);
+        employeeRepository.save(new Employee(1, "tom", 12, "male", 1111, company.getId()));
+        employeeRepository.save(new Employee(1, "tom", 12, "male", 1111, company.getId()));
+        employeeRepository.save(new Employee(1, "tom", 12, "male", 1111, company.getId()));
+        employeeRepository.save(new Employee(1, "tom", 12, "male", 1111, company.getId()));
 
-        mockMvc.perform(get("/employees").contentType(MediaType.APPLICATION_JSON).param("gender", "male"))
+        mockMvc.perform(get("/employees").contentType(MediaType.APPLICATION_JSON)
+                .param("page", "1").param("pageSize", "2"))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name").value("tom"))
                 .andExpect(jsonPath("$[0].age").value(12))
                 .andExpect(jsonPath("$[0].gender").value("male"))
