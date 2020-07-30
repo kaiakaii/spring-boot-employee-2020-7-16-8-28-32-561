@@ -5,11 +5,12 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +20,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
     private static List<Employee> employees = new ArrayList<>();
     @Mock
@@ -42,7 +43,6 @@ public class EmployeeServiceTest {
         //when
         List<Employee> actualEmployees = employeeService.findAll();
         //then
-        assertNotNull(actualEmployees);
         assertEquals(employees.size(), actualEmployees.size());
     }
 
@@ -54,7 +54,6 @@ public class EmployeeServiceTest {
         //when
         Employee actualEmployee = employeeService.addEmployee(employee);
         //then
-        assertNotNull(actualEmployee);
         assertEquals(employee, actualEmployee);
     }
     @Test
@@ -71,6 +70,7 @@ public class EmployeeServiceTest {
 
     @Test
     void should_return_true_when_delete_employee_given_employee_id() {
+        //todo
         //given
         int employeeId = 1;
         when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(new Employee(employeeId, "test", 18, "female", 900)));
@@ -90,7 +90,6 @@ public class EmployeeServiceTest {
         //when
         List<Employee> actualEmployees = employeeService.findAllByGender(gender);
         //then
-        assertNotNull(actualEmployees);
         assertEquals(2, actualEmployees.size());
     }
     @Test

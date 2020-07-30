@@ -10,7 +10,7 @@ public class Company {
     private int id;
     private String companyName;
     private int employeesNumber;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "companyId")
     private List<Employee> employees;
 
 
