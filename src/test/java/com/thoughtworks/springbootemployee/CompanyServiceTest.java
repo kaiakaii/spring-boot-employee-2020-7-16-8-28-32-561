@@ -6,6 +6,9 @@ import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
@@ -16,12 +19,15 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
 public class CompanyServiceTest {
     private static List<Company> companies;
-
+    @Mock
+    CompanyRepository companyRepository;
+    @InjectMocks
+    CompanyService companyService;
     @BeforeAll
     static void init() {
         companies = new ArrayList<>();
@@ -39,10 +45,7 @@ public class CompanyServiceTest {
     @Test
     void should_return_companies_when_find_all_companies_given_company_service() {
         //given
-        CompanyRepository companyRepository = mock(CompanyRepository.class);
         given(companyRepository.findAll()).willReturn(companies);
-        CompanyService companyService = new CompanyService(companyRepository);
-
         //when
         List<Company> actualCompanies = companyService.findAll();
         //then
@@ -54,8 +57,6 @@ public class CompanyServiceTest {
     void should_return_employees_when_add_employee_given_employee() {
         //given
         Company company = new Company(1, "test", 100);
-        CompanyRepository companyRepository = mock(CompanyRepository.class);
-        CompanyService companyService = new CompanyService(companyRepository);
         when(companyRepository.save(company)).thenReturn(company);
         //when
         Company actualCompany = companyService.addCompany(company);
@@ -68,8 +69,6 @@ public class CompanyServiceTest {
     void should_return_company_when_find_company_by_id_given_company_id() {
         //given
         int companyId = 1;
-        CompanyRepository companyRepository = mock(CompanyRepository.class);
-        CompanyService companyService = new CompanyService(companyRepository);
         Company expectCompany = companies.get(0);
         given(companyRepository.findById(companyId)).willReturn(Optional.of(expectCompany));
         //when
@@ -83,8 +82,6 @@ public class CompanyServiceTest {
     void should_return_employees_when_get_employees_by_company_id_given_company_id() {
         //given
         int companyId = 1;
-        CompanyRepository companyRepository = mock(CompanyRepository.class);
-        CompanyService companyService = new CompanyService(companyRepository);
         Company expectCompany = companies.get(0);
         given(companyRepository.findById(companyId)).willReturn(Optional.of(expectCompany));
         //when
@@ -102,8 +99,6 @@ public class CompanyServiceTest {
         //given
         int page = 1;
         int pageSize = 5;
-        CompanyRepository companyRepository = mock(CompanyRepository.class);
-        CompanyService companyService = new CompanyService(companyRepository);
         when(companyRepository.findAll(PageRequest.of(page, pageSize).first())).thenReturn(new PageImpl<>(Arrays.asList(
                 new Company(1, "test", 100),
                 new Company(2, "test2", 100))));
@@ -120,8 +115,6 @@ public class CompanyServiceTest {
     void should_return_true_when_delete_company_given_company_id() {
         //given
         int companyId = 1;
-        CompanyRepository companyRepository = mock(CompanyRepository.class);
-        CompanyService companyService = new CompanyService(companyRepository);
         when(companyRepository.findById(companyId)).thenReturn(Optional.of(
                 new Company(1, "test", 100)));
         //when
@@ -135,8 +128,6 @@ public class CompanyServiceTest {
         //given
         int companyId = 1;
         Company updateCompany = new Company(1, "test", 100);
-        CompanyRepository companyRepository = mock(CompanyRepository.class);
-        CompanyService companyService = new CompanyService(companyRepository);
         when(companyRepository.save(updateCompany)).thenReturn(updateCompany);
         when(companyRepository.findById(companyId)).thenReturn(Optional.of(updateCompany));
         //when
@@ -145,21 +136,6 @@ public class CompanyServiceTest {
         assertNotNull(company);
         assertEquals(updateCompany, company);
     }
-//    @Test
-//    void should_return_employees_of_company_when_find_employees_by_company_id_given_company_id() {
-//        //given
-//        int companyId = 1;
-//        Company updateCompany = new Company(1, "test", 100);
-//        CompanyRepository companyRepository = mock(CompanyRepository.class);
-//        CompanyService companyService = new CompanyService(companyRepository);
-//        when(companyRepository.save(updateCompany)).thenReturn(updateCompany);
-//        when(companyRepository.findById(companyId)).thenReturn(Optional.of(updateCompany));
-//        //when
-//        Company company = companyService.updateCompanyById(companyId, updateCompany);
-//        //then
-//        assertNotNull(company);
-//        assertEquals(updateCompany, company);
-//    }
 
 
 }
