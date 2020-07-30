@@ -84,4 +84,25 @@ public class CompanyIntegrationTest {
 
         //when//then
     }
+
+    @Test
+    void should_return_companies_when_get_companies_by_page_given_page_and_page_size() throws Exception {
+        //given
+        companyRepository.save(new Company(1, "test", 100));
+        companyRepository.save(new Company(2, "test1", 100));
+        companyRepository.save(new Company(3, "test3", 100));
+        companyRepository.save(new Company(4, "test", 100));
+        companyRepository.save(new Company(5, "test1", 100));
+        companyRepository.save(new Company(6, "test3", 100));
+
+        mockMvc.perform(get("/companies").contentType(MediaType.APPLICATION_JSON)
+                .param("page", "1").param("pageSize", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].companyName").value("test"))
+                .andExpect(jsonPath("$[0].employeesNumber").value(100));
+
+        //when//then
+    }
 }
