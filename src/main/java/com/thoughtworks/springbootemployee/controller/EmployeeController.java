@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.exception.NotFoundIDException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class EmployeeController {
 
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable(name = "id") Integer id, @RequestBody Employee employee) {
+    public Employee updateEmployee(@PathVariable(name = "id") Integer id, @RequestBody Employee employee) throws NotFoundIDException {
         return employeeService.updateEmployeeById(id, employee);
 
     }

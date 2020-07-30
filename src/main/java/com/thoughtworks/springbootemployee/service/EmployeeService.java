@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exception.ExceptionMessage;
+import com.thoughtworks.springbootemployee.exception.NotFoundIDException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +47,13 @@ public class EmployeeService {
         return employeeRepository.findAllByGender(gender);
     }
 
-    public Employee updateEmployeeById(int employeeId, Employee updateEmployee) {
+    public Employee updateEmployeeById(int employeeId, Employee updateEmployee) throws NotFoundIDException {
         Employee employee = findEmployeeById(employeeId);
-        if (Objects.nonNull(employee)) {
-            updateEmployee.setId(employeeId);
-            return employeeRepository.save(updateEmployee);
+        if (Objects.isNull(employee)) {
+            throw new NotFoundIDException(ExceptionMessage.NOT_FOUND_ID);
         }
-        return null;
+        updateEmployee.setId(employeeId);
+        return employeeRepository.save(updateEmployee);
     }
 
     public List<Employee> findAll(int page, int pageSize) {
