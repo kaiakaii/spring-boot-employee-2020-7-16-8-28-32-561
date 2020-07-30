@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
+import com.thoughtworks.springbootemployee.exception.NotFoundIDException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
@@ -119,5 +120,20 @@ public class EmployeeServiceTest {
         //then
         assertNotNull(employeeList);
         assertEquals(2, employeeList.size());
+    }
+
+    @Test
+    void should_return_not_found_exception_when_update_employee_by_id_given_wrong_employee_id() {
+        //given
+        int employeeId = 1;
+        Employee updateEmployee = new Employee(2, "test", 18, "male", 900);
+        when(employeeRepository.save(updateEmployee)).thenReturn(updateEmployee);
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(updateEmployee));
+        //when
+        NotFoundIDException notFoundIDException = assertThrows(NotFoundIDException.class, () -> {
+            employeeService.updateEmployeeById(employeeId, updateEmployee);
+        });
+        //then
+        assertEquals(NotFoundIDException.class, notFoundIDException);
     }
 }
