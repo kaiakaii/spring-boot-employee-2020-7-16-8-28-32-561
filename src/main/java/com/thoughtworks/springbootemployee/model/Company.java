@@ -7,10 +7,10 @@ import java.util.List;
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     private String companyName;
-    private int employeesNumber;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "companyId")
+    private Integer employeesNumber;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "companyId")
     private List<Employee> employees;
 
 
@@ -18,10 +18,25 @@ public class Company {
     public Company() {
     }
 
-    public Company(int id, String companyName, int employeesNumber) {
+    public Company(Integer id, String companyName, Integer employeesNumber) {
         this.id = id;
         this.companyName = companyName;
         this.employeesNumber = employeesNumber;
+    }
+
+    public Company(Integer id, String companyName, Integer employeesNumber, List<Employee> employees) {
+        this.id = id;
+        this.companyName = companyName;
+        this.employeesNumber = employeesNumber;
+        this.employees = employees;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCompanyName() {
@@ -32,11 +47,11 @@ public class Company {
         this.companyName = companyName;
     }
 
-    public int getEmployeesNumber() {
+    public Integer getEmployeesNumber() {
         return employeesNumber;
     }
 
-    public void setEmployeesNumber(int employeesNumber) {
+    public void setEmployeesNumber(Integer employeesNumber) {
         this.employeesNumber = employeesNumber;
     }
 
@@ -46,13 +61,5 @@ public class Company {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

@@ -10,14 +10,18 @@ import java.util.Objects;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     private String name;
-    private int age;
+    private Integer age;
     private String gender;
-    private int salary;
-    private int companyId;
+    private Integer salary;
 
-    public Employee(int id, String name, int age, String gender, int salary) {
+    private Integer companyId;
+
+    public Employee() {
+    }
+
+    public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -25,14 +29,20 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Employee() {
+    public Employee(Integer id, String name, Integer age, String gender, Integer salary, Integer companyId) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+        this.companyId = companyId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -44,11 +54,11 @@ public class Employee {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -60,12 +70,20 @@ public class Employee {
         this.gender = gender;
     }
 
-    public int getSalary() {
+    public Integer getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(Integer salary) {
         this.salary = salary;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     @Override
@@ -73,15 +91,16 @@ public class Employee {
         if (this == o) return true;
         if (!(o instanceof Employee)) return false;
         Employee employee = (Employee) o;
-        return getId() == employee.getId() &&
-                getAge() == employee.getAge() &&
-                getSalary() == employee.getSalary() &&
-                getName().equals(employee.getName()) &&
-                getGender().equals(employee.getGender());
+        return Objects.equals(getId(), employee.getId()) &&
+                Objects.equals(getName(), employee.getName()) &&
+                Objects.equals(getAge(), employee.getAge()) &&
+                Objects.equals(getGender(), employee.getGender()) &&
+                Objects.equals(getSalary(), employee.getSalary()) &&
+                Objects.equals(getCompanyId(), employee.getCompanyId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAge(), getGender(), getSalary());
+        return Objects.hash(getId(), getName(), getAge(), getGender(), getSalary(), getCompanyId());
     }
 }
