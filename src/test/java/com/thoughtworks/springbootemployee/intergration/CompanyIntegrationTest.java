@@ -145,11 +145,9 @@ public class CompanyIntegrationTest {
     @Test
     void should_return_employees_when_find_employees_by_company_id_given_company_id() throws Exception {
         //given
-        Company company = new Company(null, "test", 100);
+        Company company = new Company(1, "test", 100);
         companyRepository.save(company);
-        employeeRepository.save(new Employee(null, "tom", 12, "male", 1111, company.getId()));
-        employeeRepository.save(new Employee(null, "tom2", 12, "female", 1111, company.getId()));
-        employeeRepository.save(new Employee(null, "tom3", 12, "male", 1111, company.getId()));
+        employeeRepository.save(new Employee(1, "tom", 12, "male", 1111, company.getId()));
 
         mockMvc.perform(get("/companies/{id}/employees", 1).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
