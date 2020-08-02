@@ -4,7 +4,6 @@ import com.thoughtworks.springbootemployee.exception.ExceptionMessage;
 import com.thoughtworks.springbootemployee.exception.NotFoundIDException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -13,34 +12,34 @@ import java.util.Objects;
 
 @Service
 public class EmployeeService {
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-//    public EmployeeService(EmployeeRepository employeeRepository) {
-//        this.employeeRepository = employeeRepository;
-//    }
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
 
     public List<Employee> findAll() {
         return this.employeeRepository.findAll();
     }
 
-    public Employee addEmployee(Employee employee) {
-        if (Objects.nonNull(employee)) {
-            return employeeRepository.save(employee);
+    public Employee addEmployee(Employee employee) throws NotFoundIDException {
+        if (Objects.isNull(employee)) {
+            throw new NotFoundIDException(ExceptionMessage.NOT_FOUND_ID);
         }
-        return null;
+        return employeeRepository.save(employee);
     }
 
-    public Employee findEmployeeById(Integer employeeId) {
-        return employeeRepository.findById(employeeId).orElse(null);
+    public Employee findEmployeeById(Integer employeeId) throws NotFoundIDException {
+        return employeeRepository.findById(employeeId).orElseThrow(()->new NotFoundIDException(ExceptionMessage.NOT_FOUND_ID));
     }
 
-    public boolean deleteById(Integer employeeId) {
-        if (Objects.nonNull(employeeId) && Objects.nonNull(findEmployeeById(employeeId))) {
-            employeeRepository.deleteById(employeeId);
-            return true;
+    public boolean deleteById(Integer employeeId) throws NotFoundIDException {
+        if (Objects.isNull(employeeId) && Objects.isNull(findEmployeeById(employeeId))) {
+            throw new NotFoundIDException(ExceptionMessage.NOT_FOUND_ID);
         }
-        return false;
+        employeeRepository.deleteById(employeeId);
+        return true;
     }
 
     public List<Employee> findAllByGender(String gender) {
@@ -56,9 +55,9 @@ public class EmployeeService {
         return employeeRepository.save(updateEmployee);
     }
 
-    public List<Employee> findAll(int page, int pageSize) {
+    public List<Employee> findAll(int page, int pageSize) throws NotFoundIDException {
         if (page < 1 || pageSize < 0) {
-            return null;
+            throw new NotFoundIDException(ExceptionMessage.NOT_FOUND_ID);
         }
         return employeeRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
     }

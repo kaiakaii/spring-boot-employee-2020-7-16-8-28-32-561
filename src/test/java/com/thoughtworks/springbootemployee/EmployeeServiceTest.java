@@ -50,7 +50,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_employees_when_add_employee_given_employee() {
+    void should_return_employees_when_add_employee_given_employee() throws NotFoundIDException {
         //given
         Employee employee = new Employee(1, "test", 18, "female", 900);
         when(employeeRepository.save(employee)).thenReturn(employee);
@@ -61,7 +61,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_employee_when_find_employees_by_id_given_employee_id() {
+    void should_return_employee_when_find_employees_by_id_given_employee_id() throws NotFoundIDException {
         //given
         int employeeId = 1;
         when(employeeRepository.findById(1)).thenReturn(Optional.of(new Employee(1, "test", 18, "female", 900)));
@@ -73,7 +73,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_true_when_delete_employee_given_employee_id() {
+    void should_return_true_when_delete_employee_given_employee_id() throws NotFoundIDException {
         //todo
         //given
         int employeeId = 1;
@@ -112,7 +112,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_employees_when_get_employee_by_paging_given_page_and_page_size() {
+    void should_return_employees_when_get_employee_by_paging_given_page_and_page_size() throws NotFoundIDException {
         //given
         int page = 1;
         int pageSize = 5;

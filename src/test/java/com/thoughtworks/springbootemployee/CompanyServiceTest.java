@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
+import com.thoughtworks.springbootemployee.exception.NotFoundIDException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -80,7 +81,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_employees_when_get_employees_by_company_id_given_company_id() {
+    void should_return_employees_when_get_employees_by_company_id_given_company_id() throws NotFoundIDException {
         //given
         int companyId = 1;
         Company expectCompany = companies.get(0);
@@ -125,7 +126,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_update_company_when_update_company_by_id_given_company_id() {
+    void should_return_update_company_when_update_company_by_id_given_company_id() throws NotFoundIDException {
         //given
         int companyId = 1;
         Company updateCompany = new Company(1, "test", 100);

@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exception.ExceptionMessage;
+import com.thoughtworks.springbootemployee.exception.NotFoundIDException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -47,20 +49,21 @@ public class CompanyService {
         return false;
     }
 
-    public Company updateCompanyById(int companyId, Company updateCompany) {
+    public Company updateCompanyById(int companyId, Company updateCompany) throws NotFoundIDException {
         Company company = findById(companyId);
-        if (Objects.nonNull(company)) {
-            updateCompany.setId(companyId);
-            return companyRepository.save(updateCompany);
+        if (Objects.isNull(company)) {
+            throw new NotFoundIDException(ExceptionMessage.NOT_FOUND_ID);
+
         }
-        return null;
+        updateCompany.setId(companyId);
+        return companyRepository.save(updateCompany);
     }
 
-    public List<Employee> getEmployeesByCompanyId(int companyId) {
+    public List<Employee> getEmployeesByCompanyId(int companyId) throws NotFoundIDException {
         Company company = findById(companyId);
-        if (Objects.nonNull(company)) {
-            return company.getEmployees();
+        if (Objects.isNull(company)) {
+            throw new NotFoundIDException(ExceptionMessage.NOT_FOUND_ID);
         }
-        return null;
+        return company.getEmployees();
     }
 }
