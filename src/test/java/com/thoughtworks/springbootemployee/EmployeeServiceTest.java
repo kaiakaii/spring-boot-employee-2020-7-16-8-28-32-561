@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.exception.NotFoundIDException;
 import com.thoughtworks.springbootemployee.mapper.RequestEmployee;
+import com.thoughtworks.springbootemployee.mapper.ResponseEmployee;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
@@ -58,6 +59,7 @@ public class EmployeeServiceTest {
         //then
         assertEquals(employee, actualEmployee);
     }
+
     @Test
     void should_return_employee_when_find_employees_by_id_given_employee_id() {
         //given
@@ -94,6 +96,7 @@ public class EmployeeServiceTest {
         //then
         assertEquals(2, actualEmployees.size());
     }
+
     @Test
     void should_return_update_employee_when_update_employee_by_id_given_employee_id() throws NotFoundIDException {
         //given
@@ -137,13 +140,25 @@ public class EmployeeServiceTest {
         //then
         assertEquals(NotFoundIDException.class, notFoundIDException.getClass());
     }
+
     @Test
     void should_return_employee_when_mapper_given_request_employee() {
         //given
-        RequestEmployee requestEmployee = new RequestEmployee(1, "test", 18, "male", 900,1);
+        RequestEmployee requestEmployee = new RequestEmployee(1, "test", 18, "male", 900, 1);
         //when
         Employee employee = RequestEmployee.toEmployee(requestEmployee);
         //then
-        assertEquals(employee.getName(),requestEmployee.getName());
+        assertEquals(employee.getName(), requestEmployee.getName());
+    }
+
+    @Test
+    void should_return_response_employee_when_mapper_given_employee() {
+        //given
+        Employee employee = new Employee(1, "test", 18, "male", 900);
+        //when
+        ResponseEmployee responseEmployee = ResponseEmployee.toResponseEmployee(employee);
+        //then
+        assertNull(responseEmployee);
+        assertEquals(employee.getName(), responseEmployee.getName());
     }
 }
