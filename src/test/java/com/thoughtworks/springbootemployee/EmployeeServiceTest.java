@@ -158,7 +158,7 @@ public class EmployeeServiceTest {
         //when
         ResponseEmployee responseEmployee = ResponseEmployee.toResponseEmployee(employee);
         //then
-        assertNull(responseEmployee);
+        assertNotNull(responseEmployee);
         assertEquals(employee.getName(), responseEmployee.getName());
     }
 }

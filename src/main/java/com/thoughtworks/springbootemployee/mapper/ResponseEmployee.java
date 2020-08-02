@@ -11,7 +11,14 @@ public class ResponseEmployee {
 
     private Integer companyId;
     public static ResponseEmployee toResponseEmployee(Employee employee){
-        return null;
+        ResponseEmployee responseEmployee = new ResponseEmployee();
+        responseEmployee.setId(employee.getId());
+        responseEmployee.setAge(employee.getAge());
+        responseEmployee.setName(employee.getName());
+        responseEmployee.setGender(employee.getGender());
+        responseEmployee.setSalary(employee.getSalary());
+        responseEmployee.setCompanyId(employee.getCompanyId());
+        return responseEmployee;
 
     }
     public Integer getId() {
